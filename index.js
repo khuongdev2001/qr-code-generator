@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000; // Use environment variable for port or d
 //Example URL: https://localhost:5000/qr/test-qr-string?width=200&height=200
 app.get('/qr/:data', async (req, res) => {
     const { data } = req.params;
-    const { width, height } = req.query;
+    const { width, height, margin = 4, scale = 4 } = req.query;
 
     // Parse width and height as integers
     let widthInt, heightInt;
@@ -22,7 +22,7 @@ app.get('/qr/:data', async (req, res) => {
 
     try {
         // Generate QR code data as a PNG buffer
-        const pngBuffer = await qrcode.toBuffer(data, { type: 'png', scale: 4, width: widthInt, height: heightInt });  // Adjust scale if needed
+        const pngBuffer = qrcode.toBuffer(data, { type: 'png', scale: Number(scale), width: widthInt, height: heightInt, margin: Number(margin) });  // Adjust scale if needed
 
         // Set content type and send response
         res.setHeader('Content-Type', 'image/png');
