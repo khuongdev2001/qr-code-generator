@@ -22,7 +22,7 @@ app.get('/qr/:data', async (req, res) => {
 
     try {
         // Generate QR code data as a PNG buffer
-        const pngBuffer = qrcode.toBuffer(data, { type: 'png', scale: Number(scale), width: widthInt, height: heightInt, margin: Number(margin) });  // Adjust scale if needed
+        const pngBuffer = await qrcode.toBuffer(data, { type: 'png', scale: Number(scale), width: widthInt, height: heightInt, margin: Number(margin) });  // Adjust scale if needed
 
         // Set content type and send response
         res.setHeader('Content-Type', 'image/png');
